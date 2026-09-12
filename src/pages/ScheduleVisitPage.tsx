@@ -51,7 +51,7 @@ export const ScheduleVisitPage: React.FC = () => {
     return Object.keys(errs).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
@@ -62,20 +62,38 @@ export const ScheduleVisitPage: React.FC = () => {
     );
 
     const bookingPayload = {
-      id: `VIS-${Date.now().toString().slice(-5)}`,
       propertyId: propertyId,
       propertyTitle: selectedProp ? selectedProp.title : 'Imóvel Geral Aurea',
       propertyLocation: selectedProp ? `${selectedProp.neighborhood}, ${selectedProp.location}` : 'Maputo',
-      fullName,
-      phone,
-      email,
+      clientName: fullName,
+      clientPhone: phone,
+      clientEmail: email,
       preferredDate,
       preferredTime,
       message,
+      status: 'pendente',
       createdAt: new Date().toISOString(),
     };
 
-    sessionStorage.setItem('aurea_latest_booking', JSON.stringify(bookingPayload));
+    try {
+      const { collection, addDoc } = await import('firebase/firestore');
+      const { db } = await import('../lib/firebase');
+      
+      const docRef = await addDoc(collection(db, 'visits'), bookingPayload);
+
+      // Call our API to send email
+      await fetch('/api/schedule-visit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...bookingPayload, id: docRef.id }),
+      });
+
+      sessionStorage.setItem('aurea_latest_booking', JSON.stringify({ ...bookingPayload, id: docRef.id }));
+    } catch (error) {
+      console.error('Error saving visit:', error);
+    }
 
     setTimeout(() => {
       setSubmitting(false);

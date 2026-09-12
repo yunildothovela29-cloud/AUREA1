@@ -36,7 +36,7 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-32 sm:space-y-48 pb-32 text-[#261B14]">
+    <div className="space-y-32 sm:space-y-48 text-[#261B14]">
       {/* 1. HERO SECTION - ELEGANT WARM LUXURY ARCHITECTURE */}
       <section className="relative min-h-[90vh] flex items-center justify-center pt-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Background Architectural Photo: Bright Natural Daylight Villa */}
@@ -186,28 +186,14 @@ export const HomePage: React.FC = () => {
 
       {/* 2. IMÓVEIS EM DESTAQUE (6 cards) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-16 gap-6">
-          <div>
-            <span className="text-xs uppercase tracking-[0.25em] text-[#825A39] font-semibold block mb-4">
-              Selecção do Mês
-            </span>
-            <h2 className="font-serif text-4xl sm:text-5xl text-[#221A15] font-normal tracking-tight">
-              Imóveis em Destaque
-            </h2>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              to="/comprar"
-              className="text-[11px] uppercase tracking-[0.2em] font-semibold text-[#825A39] hover:text-[#3E2819] flex items-center gap-2 transition-colors group"
-            >
-              <span>Ver todos os imóveis</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-            </Link>
-          </div>
+        <div className="mb-12 sm:mb-16">
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#221A15] font-normal tracking-tight">
+            Imóveis em destaque
+          </h2>
         </div>
 
         {/* 6 Grid items */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 lg:gap-y-20 lg:gap-x-10">
           {featuredProperties.map((prop) => (
             <PropertyCard key={prop.id} property={prop} />
           ))}
@@ -253,47 +239,32 @@ export const HomePage: React.FC = () => {
               </div>
 
               {/* 3 Pillars requested */}
-              <div className="space-y-8 pt-8">
-                <div className="flex items-start gap-6 p-8 rounded-3xl bg-white border border-[#E8E2D6] shadow-sm">
-                  <div className="p-4 rounded-2xl bg-[#FAF4ED] text-[#825A39] shrink-0">
-                    <Award className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#221A15] mb-3 tracking-wide">
-                      Selecção cuidadosa
-                    </h3>
-                    <p className="text-base text-[#6B5E54] leading-relaxed tracking-wide">
-                      Não acumulamos volumes indiscriminados. Analisamos planta, orientação solar, qualidade construtiva e documentação jurídica antes de apresentar qualquer opção.
-                    </p>
-                  </div>
+              <div className="space-y-8 pt-8 border-t border-[#E8E2D6]">
+                <div>
+                  <h3 className="font-serif text-2xl text-[#221A15] mb-2 tracking-wide">
+                    Selecção cuidadosa
+                  </h3>
+                  <p className="text-base text-[#6B5E54] leading-relaxed tracking-wide">
+                    Não acumulamos volumes indiscriminados. Analisamos planta, orientação solar, qualidade construtiva e documentação jurídica antes de apresentar qualquer opção.
+                  </p>
                 </div>
 
-                <div className="flex items-start gap-6 p-8 rounded-3xl bg-white border border-[#E8E2D6] shadow-sm">
-                  <div className="p-4 rounded-2xl bg-[#FAF4ED] text-[#825A39] shrink-0">
-                    <Compass className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#221A15] mb-3 tracking-wide">
-                      Acompanhamento personalizado
-                    </h3>
-                    <p className="text-base text-[#6B5E54] leading-relaxed tracking-wide">
-                      Atendimento individual com horários flexíveis, consultoria de investimento e visitas guiadas sem pressa para que cada detalhe seja avaliado com calma.
-                    </p>
-                  </div>
+                <div>
+                  <h3 className="font-serif text-2xl text-[#221A15] mb-2 tracking-wide">
+                    Acompanhamento personalizado
+                  </h3>
+                  <p className="text-base text-[#6B5E54] leading-relaxed tracking-wide">
+                    Atendimento individual com horários flexíveis, consultoria de investimento e visitas guiadas sem pressa para que cada detalhe seja avaliado com calma.
+                  </p>
                 </div>
 
-                <div className="flex items-start gap-6 p-8 rounded-3xl bg-white border border-[#E8E2D6] shadow-sm">
-                  <div className="p-4 rounded-2xl bg-[#FAF4ED] text-[#825A39] shrink-0">
-                    <ShieldCheck className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#221A15] mb-3 tracking-wide">
-                      Processo simples e transparente
-                    </h3>
-                    <p className="text-base text-[#6B5E54] leading-relaxed tracking-wide">
-                      Clareza absoluta nas negociações, minutas contratuais revisadas e apoio completo até à entrega das chaves e registo predial.
-                    </p>
-                  </div>
+                <div>
+                  <h3 className="font-serif text-2xl text-[#221A15] mb-2 tracking-wide">
+                    Processo simples e transparente
+                  </h3>
+                  <p className="text-base text-[#6B5E54] leading-relaxed tracking-wide">
+                    Clareza absoluta nas negociações, minutas contratuais revisadas e apoio completo até à entrega das chaves e registo predial.
+                  </p>
                 </div>
               </div>
             </div>
@@ -361,29 +332,25 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 5. CHAMADA FINAL */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-[#2D2017] text-[#FAF8F5] p-12 sm:p-20 lg:p-32 text-center border border-[#443327] shadow-xl">
-          <div className="relative z-10 max-w-3xl mx-auto space-y-10">
-            <span className="text-xs uppercase tracking-[0.25em] text-[#D4B598] font-semibold block">
-              Próximo Passo
+      <section className="bg-[#1A1512] text-[#E8E2D6] pt-32 pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-3xl mx-auto space-y-8">
+            <span className="text-[10px] uppercase tracking-[0.25em] text-[#8C8074] font-semibold block">
+              O próximo capítulo
             </span>
-            <h2 className="font-serif text-4xl sm:text-6xl font-normal tracking-tight text-white leading-tight">
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal text-white leading-tight">
               Está pronto para encontrar o próximo espaço?
             </h2>
-            <p className="text-base sm:text-lg text-[#D4C8BC] max-w-2xl mx-auto leading-relaxed tracking-wide">
-              Quer procure uma moradia unifamiliar com jardim em Sommerschield, uma penthouse com vista mar na Polana ou um espaço corporativo de prestígio, a nossa equipa está ao seu dispor.
-            </p>
-
-            <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-6">
+            <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link
                 to="/comprar"
-                className="w-full sm:w-auto px-10 py-4 rounded-full bg-[#FAF8F5] hover:bg-white text-[#26180E] text-xs uppercase tracking-widest font-semibold transition-all shadow-md hover:scale-102 cursor-pointer"
+                className="w-full sm:w-auto px-8 py-3.5 bg-white text-[#1A1512] text-[10px] uppercase tracking-[0.2em] font-semibold transition-colors hover:bg-[#E8E2D6]"
               >
                 Ver propriedades
               </Link>
               <Link
                 to="/contactos"
-                className="w-full sm:w-auto px-10 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/25 text-xs uppercase tracking-widest font-semibold transition-all hover:scale-102 cursor-pointer"
+                className="w-full sm:w-auto px-8 py-3.5 bg-transparent border border-[#3E3227] text-white text-[10px] uppercase tracking-[0.2em] font-semibold transition-colors hover:bg-[#3E3227]"
               >
                 Falar connosco
               </Link>

@@ -134,7 +134,7 @@ export const RentPage: React.FC = () => {
 
       {/* Properties Grid */}
       {filteredProperties.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 lg:gap-y-20 lg:gap-x-10 mt-12">
           {filteredProperties.map((prop) => (
             <PropertyCard key={prop.id} property={prop} />
           ))}

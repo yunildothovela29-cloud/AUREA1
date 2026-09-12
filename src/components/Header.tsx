@@ -25,7 +25,9 @@ export const Header: React.FC = () => {
     { label: 'Início', path: '/' },
     { label: 'Comprar', path: '/comprar' },
     { label: 'Arrendar', path: '/arrendar' },
-    { label: 'Sobre nós', path: '/sobre' },
+    { label: 'Empreendimentos', path: '/empreendimentos' },
+    { label: 'Vender', path: '/vender' },
+    { label: 'Sobre', path: '/sobre' },
     { label: 'Contactos', path: '/contactos' },
   ];
 
@@ -48,21 +50,23 @@ export const Header: React.FC = () => {
         <Link
           to="/"
           id="brand-logo-link"
-          className="group flex flex-col items-start focus:outline-hidden"
+          className="group flex items-center gap-4 focus:outline-hidden"
         >
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#825A39]" />
-            <span className="font-serif text-xl sm:text-2xl font-normal tracking-[0.18em] text-[#221A15] group-hover:text-[#5E3E26] transition-colors">
-              {BRAND_CONFIG.name}
+          <div className="w-9 h-9 border border-[#221A15] flex items-center justify-center shrink-0">
+            <span className="font-serif text-lg text-[#221A15]">A</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="font-sans text-[13px] sm:text-[14px] font-medium tracking-[0.2em] text-[#221A15] group-hover:text-[#5E3E26] transition-colors uppercase">
+              Aurea Properties
+            </span>
+            <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[#825A39] font-medium mt-0.5 hidden sm:block">
+              Maputo • Mediação & Arquitectura
             </span>
           </div>
-          <span className="text-[10px] uppercase tracking-[0.25em] text-[#825A39] font-medium ml-4 -mt-0.5">
-            Maputo • Mediação & Arquitectura
-          </span>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav id="desktop-navigation" className="hidden md:flex items-center gap-10">
+        <nav id="desktop-navigation" className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navLinks.map((link) => {
             const active = isActive(link.path);
             return (
@@ -70,16 +74,13 @@ export const Header: React.FC = () => {
                 key={link.path}
                 to={link.path}
                 id={`nav-link-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
-                className={`text-[11px] uppercase tracking-[0.2em] transition-all relative py-1 ${
+                className={`text-[10px] xl:text-[11px] uppercase tracking-[0.15em] transition-all relative py-1 ${
                   active
-                    ? 'text-[#221A15] font-bold'
+                    ? 'text-[#221A15] font-semibold border-b border-[#221A15]'
                     : 'text-[#6B5E54] hover:text-[#221A15] font-medium'
                 }`}
               >
                 {link.label}
-                {active && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#825A39] rounded-full" />
-                )}
               </Link>
             );
           })}
@@ -94,20 +95,18 @@ export const Header: React.FC = () => {
             rel="noopener noreferrer"
             id="header-whatsapp-btn"
             title="Falar no WhatsApp"
-            className="flex items-center gap-2 text-[11px] text-[#443831] hover:text-[#221A15] px-4 py-2.5 rounded-full border border-[#E2D9CC] bg-white hover:bg-[#F5F1EA] transition-all shadow-xs"
+            className="flex items-center gap-1.5 text-[11px] text-[#221A15] hover:text-[#5E3E26] transition-colors"
           >
-            <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
-            <span className="font-semibold tracking-widest uppercase">WhatsApp</span>
+            <MessageCircle className="w-4 h-4" />
           </a>
 
           {/* Schedule Visit Button */}
           <Link
             to="/agendar"
             id="header-schedule-btn"
-            className="inline-flex items-center gap-2 bg-[#3E2819] hover:bg-[#26180E] text-[#FAF8F5] px-6 py-3 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold transition-all shadow-xs hover:shadow-md active:scale-98"
+            className="bg-[#221A15] hover:bg-[#3E2819] text-white px-5 py-2.5 rounded-sm text-[10px] uppercase tracking-[0.15em] font-medium transition-colors"
           >
-            <Calendar className="w-3.5 h-3.5 text-[#EFE9DF]" />
-            <span>Agendar</span>
+            Agendar visita
           </Link>
         </div>
 
