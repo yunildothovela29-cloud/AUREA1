@@ -1,0 +1,58 @@
+import { NeighborhoodInfo } from '../types';
+
+export const NEIGHBORHOODS: NeighborhoodInfo[] = [
+  {
+    id: 'polana',
+    name: 'Polana',
+    tagline: 'O coração diplomático e histórico',
+    propertyCount: 3,
+    averagePriceSale: '18.5M MT - 45M MT',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80',
+    description: 'Avenidas arborizadas com acácias vermelhas, proximidade a embaixadas, bistrôs de autor e vistas deslumbrantes sobre a Baía de Maputo.',
+  },
+  {
+    id: 'sommerschield',
+    name: 'Sommerschield',
+    tagline: 'Exclusividade residencial e privacidade',
+    propertyCount: 2,
+    averagePriceSale: '25M MT - 60M MT',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80',
+    description: 'O bairro de referência para moradias de luxo contemporâneas, condomínios fechados com segurança reforçada e tranquilidade absoluta.',
+  },
+  {
+    id: 'costa-do-sol',
+    name: 'Costa do Sol',
+    tagline: 'Viver de frente para o Índico',
+    propertyCount: 1,
+    averagePriceSale: '20M MT - 40M MT',
+    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1000&q=80',
+    description: 'A brisa do oceano, a famosa avenida Marginal e condomínios que oferecem qualidade de vida descontraída a poucos minutos da praia.',
+  },
+  {
+    id: 'triunfo',
+    name: 'Triunfo',
+    tagline: 'Arquitectura nova e expansão nobre',
+    propertyCount: 1,
+    averagePriceSale: '16M MT - 35M MT',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80',
+    description: 'O bairro que mais se desenvolve em moradias de design arrojado, ruas tranquilas e excelente relação de valorização imobiliária.',
+  },
+  {
+    id: 'coop',
+    name: 'Coop',
+    tagline: 'Conveniência urbana e vida comunitária',
+    propertyCount: 1,
+    averagePriceSale: '10M MT - 18M MT',
+    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1000&q=80',
+    description: 'Localização central privilegiada com fácil acesso a escolas, comércio tradicional e transportes, ideal para habitação e investimento.',
+  },
+  {
+    id: 'matola',
+    name: 'Matola',
+    tagline: 'Amplos lotes, jardins e ar puro',
+    propertyCount: 1,
+    averagePriceSale: '12M MT - 30M MT',
+    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1000&q=80',
+    description: 'Quintas e moradias com terrenos generosos, piscinas de grande porte e jardins maduros, combinando retiro familiar e acessos rápidos.',
+  },
+];
