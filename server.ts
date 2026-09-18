@@ -17,7 +17,7 @@ async function startServer() {
       // Note: In production, the user must set SMTP credentials in the environment variables
       const smtpUser = process.env.SMTP_USER;
       const smtpPass = process.env.SMTP_PASS;
-      const adminEmail = process.env.ADMIN_EMAIL || "admin@aureaproperties.mz";
+      const adminEmail = process.env.ADMIN_EMAIL || "sergio.sulemane@gmail.com";
 
       if (smtpUser && smtpPass) {
         const transporter = nodemailer.createTransport({
@@ -31,7 +31,7 @@ async function startServer() {
         });
 
         const mailOptions = {
-          from: `"Aurea Properties" <${smtpUser}>`,
+          from: `"2S Imobiliária & Serviços" <${smtpUser}>`,
           to: adminEmail,
           subject: `Nova Solicitação de Visita: ${propertyTitle}`,
           text: `
