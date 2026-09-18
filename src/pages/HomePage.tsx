@@ -4,7 +4,6 @@ import { ArrowRight, CalendarDays, Loader2, Search } from 'lucide-react';
 import { PropertyCard } from '../components/PropertyCard';
 import { useProperties } from '../hooks/useProperties';
 import { OperationType } from '../types';
-import { BRAND_CONFIG } from '../data/config';
 import { BrandLogo } from '../components/BrandLogo';
 
 export const HomePage: React.FC = () => {
@@ -27,16 +26,15 @@ export const HomePage: React.FC = () => {
   return (
     <div className="pt-28 pb-20 bg-[#F7F9FC] min-h-screen">
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-white border border-[#E1E6EE] rounded-3xl p-7 sm:p-10 mb-6 shadow-sm">
+        <div className="bg-white border border-[#E1E6EE] rounded-2xl p-7 sm:p-10 mb-6 shadow-sm">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-7">
             <div>
-              <BrandLogo className="mb-6" />
-              <p className="text-sm font-semibold text-[#D93030] mb-2">Maputo, Moçambique</p>
+              <p className="text-sm font-semibold text-[#D93030] mb-2">2S Imobiliária & Serviços · Maputo</p>
               <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#14245F] max-w-2xl">
-                Encontre a casa que procura.
+                Encontre um imóvel em Maputo.
               </h1>
               <p className="mt-4 text-base text-[#667085] max-w-2xl leading-relaxed">
-                Veja as propriedades disponíveis, abra os detalhes e marque uma visita em poucos passos.
+                Consulte as casas disponíveis, veja os detalhes e marque uma visita directamente pelo site.
               </p>
             </div>
             <Link to="/agendar" className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#D93030] text-white font-semibold text-sm hover:bg-[#BF2525]">
@@ -67,7 +65,7 @@ export const HomePage: React.FC = () => {
 
         <div className="flex items-end justify-between gap-4 mb-5">
           <div>
-            <span className="text-xs uppercase tracking-[0.18em] text-[#D93030] font-bold">Disponíveis agora</span>
+            <span className="text-xs font-semibold text-[#D93030]">Imóveis disponíveis</span>
             <h2 className="text-2xl sm:text-3xl font-semibold text-[#14245F] mt-1">{operation === 'venda' ? 'Imóveis para comprar' : 'Imóveis para arrendar'}</h2>
           </div>
           <Link to={operation === 'venda' ? '/comprar' : '/arrendar'} className="text-sm font-semibold text-[#14245F] inline-flex items-center gap-1.5 hover:text-[#D93030]">
@@ -88,9 +86,9 @@ export const HomePage: React.FC = () => {
           </div>
         )}
 
-        <div className="mt-10 bg-[#14245F] rounded-2xl p-6 sm:p-8 text-white flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div><p className="font-semibold text-lg">Quer visitar uma propriedade?</p><p className="text-sm text-white/70 mt-1">Escolha o imóvel e marque a data e hora que prefere.</p></div>
-          <Link to="/agendar" className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-white text-[#14245F] font-semibold text-sm hover:bg-white/90">Agendar visita</Link>
+        <div className="mt-10 bg-white border border-[#E1E6EE] rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div><p className="font-semibold text-lg text-[#14245F]">Quer visitar uma propriedade?</p><p className="text-sm text-[#667085] mt-1">Escolha a casa e marque o horário que prefere.</p></div>
+          <Link to="/agendar" className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-[#14245F] text-white font-semibold text-sm hover:bg-[#0E1944]">Agendar visita</Link>
         </div>
       </section>
     </div>
