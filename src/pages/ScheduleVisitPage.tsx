@@ -58,11 +58,9 @@ export const ScheduleVisitPage: React.FC = () => {
       status: 'pendente',
     };
 
-    const { data: insertedVisit, error: insertError } = await supabase
+    const { error: insertError } = await supabase
       .from('visits')
-      .insert(payload)
-      .select('id')
-      .single();
+      .insert(payload);
 
     if (insertError) {
       console.error(insertError);
@@ -72,7 +70,6 @@ export const ScheduleVisitPage: React.FC = () => {
     }
 
     sessionStorage.setItem('2s_latest_booking', JSON.stringify({
-      id: insertedVisit?.id,
       clientName: payload.client_name,
       clientPhone: payload.client_phone,
       clientEmail: payload.client_email,
