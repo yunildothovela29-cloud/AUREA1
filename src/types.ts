@@ -46,7 +46,7 @@ export interface Property {
   amenities: string[];
   images: string[];
   agent: PropertyAgent;
-  status: 'Disponível' | 'Reservado' | 'Em Negociação';
+  status: 'Disponível' | 'Reservado' | 'Em Negociação' | 'Arquivado';
 }
 
 export interface NeighborhoodInfo {
