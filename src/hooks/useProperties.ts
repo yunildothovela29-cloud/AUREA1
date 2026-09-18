@@ -1,32 +1,77 @@
-import { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { useCallback, useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
 import { PROPERTIES } from '../data/properties';
 import { Property } from '../types';
+
+function mapProperty(row: any): Property {
+  return {
+    id: String(row.id),
+    slug: row.slug || '',
+    title: row.title || '',
+    operation: row.operation,
+    type: row.type,
+    location: row.location || '',
+    neighborhood: row.neighborhood || row.location || '',
+    city: row.city || 'Maputo',
+    address: row.address || '',
+    price: Number(row.price || 0),
+    priceDisplay: row.price_display || '',
+    pricePeriod: row.price_period || undefined,
+    currency: row.currency || 'MT',
+    bedrooms: Number(row.bedrooms || 0),
+    bathrooms: Number(row.bathrooms || 0),
+    suites: Number(row.suites || 0),
+    area: Number(row.area || 0),
+    parking: Number(row.parking || 0),
+    yearBuilt: row.year_built ? Number(row.year_built) : undefined,
+    featured: Boolean(row.featured),
+    tag: row.tag || undefined,
+    description: row.description || '',
+    longDescription: Array.isArray(row.long_description) ? row.long_description : [],
+    highlights: Array.isArray(row.highlights) ? row.highlights : [],
+    amenities: Array.isArray(row.amenities) ? row.amenities : [],
+    images: Array.isArray(row.images) ? row.images : [],
+    agent: row.agent || {
+      name: '2S Imobiliária & Serviços',
+      role: 'Atendimento',
+      phone: '+258 84 406 7591',
+      email: 'sergio.sulemane@gmail.com',
+      photo: '',
+    },
+    status: row.status || 'Disponível',
+  };
+}
 
 export function useProperties() {
   const [properties, setProperties] = useState<Property[]>(PROPERTIES);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const load = async () => {
-    setLoading(true); setError('');
-    try {
-      const snapshot = await getDocs(collection(db, 'properties'));
-      if (snapshot.empty) { setProperties(PROPERTIES); }
-      else {
-        const remote = snapshot.docs.map((item) => ({ id: item.id, ...item.data() } as Property))
-          .filter((item) => item.status !== 'Arquivado')
-          .sort((a, b) => String((b as any).createdAt || '').localeCompare(String((a as any).createdAt || '')));
-        setProperties(remote);
-      }
-    } catch (err) {
-      console.error('Falha ao carregar imóveis:', err);
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError('');
+
+    const { data, error: queryError } = await supabase
+      .from('properties')
+      .select('*')
+      .neq('status', 'Arquivado')
+      .order('featured', { ascending: false })
+      .order('created_at', { ascending: false });
+
+    if (queryError) {
+      console.error('Erro ao carregar imóveis:', queryError);
       setError('Não foi possível actualizar os imóveis agora.');
       setProperties(PROPERTIES);
-    } finally { setLoading(false); }
-  };
+    } else {
+      setProperties((data || []).map(mapProperty));
+    }
 
-  useEffect(() => { void load(); }, []);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
   return { properties, loading, error, refresh: load };
 }
