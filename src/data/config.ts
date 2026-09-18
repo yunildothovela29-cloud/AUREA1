@@ -1,6 +1,8 @@
 export const BRAND_CONFIG = {
   name: '2S IMOBILIÁRIA & SERVIÇOS',
   shortName: '2S',
+  introBrandSymbol: '2S',
+  introSubtitle: 'Acesso Privado',
   tagline: 'Casas certas. Escolhas simples.',
   subtagline: 'Encontre casas e outros imóveis disponíveis em Maputo, veja os detalhes e marque uma visita directamente com a nossa equipa.',
   phone: '+258 84 406 7591',
