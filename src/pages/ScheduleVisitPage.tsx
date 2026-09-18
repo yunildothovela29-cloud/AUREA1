@@ -1,7 +1,7 @@
 import React, { FormEvent, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CalendarDays, Loader2, Mail, Phone, User } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { isSupabaseConfigured, supabase } from '../lib/supabase';
 import { getVisitWhatsAppUrl, BRAND_CONFIG } from '../data/config';
 import { useProperties } from '../hooks/useProperties';
 
@@ -44,6 +44,12 @@ export const ScheduleVisitPage: React.FC = () => {
     }
 
     setSaving(true);
+
+    if (!isSupabaseConfigured) {
+      setError('O agendamento ainda não está disponível porque o Supabase não foi configurado no site.');
+      setSaving(false);
+      return;
+    }
 
     const payload = {
       property_id: property.id,
