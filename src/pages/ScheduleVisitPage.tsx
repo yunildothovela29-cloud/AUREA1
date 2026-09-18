@@ -12,7 +12,6 @@ export const ScheduleVisitPage: React.FC = () => {
   const navigate = useNavigate();
   const { properties, loading } = useProperties();
   const selectedId = searchParams.get('imovel') || '';
-  const selectedProperty = useMemo(() => properties.find((p) => p.id === propertyId || p.slug === propertyId), [properties, propertyId]);
 
   const [propertyId, setPropertyId] = useState(selectedId);
   const [fullName, setFullName] = useState('');
@@ -23,6 +22,7 @@ export const ScheduleVisitPage: React.FC = () => {
   const [message, setMessage] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const selectedProperty = useMemo(() => properties.find((p) => p.id === propertyId || p.slug === propertyId), [properties, propertyId]);
 
   const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
   const times = ['09:00', '10:00', '11:30', '14:00', '15:30', '17:00'];
