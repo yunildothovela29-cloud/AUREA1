@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import { PROPERTIES } from '../data/properties';
+import { isSupabaseConfigured, supabase } from '../lib/supabase';
 import { Property } from '../types';
 
 function mapProperty(row: any): Property {
@@ -43,13 +42,20 @@ function mapProperty(row: any): Property {
 }
 
 export function useProperties() {
-  const [properties, setProperties] = useState<Property[]>(PROPERTIES);
+  const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
     setError('');
+
+    if (!isSupabaseConfigured) {
+      setProperties([]);
+      setError('Supabase ainda não está configurado neste deployment.');
+      setLoading(false);
+      return;
+    }
 
     const { data, error: queryError } = await supabase
       .from('properties')
@@ -61,7 +67,7 @@ export function useProperties() {
     if (queryError) {
       console.error('Erro ao carregar imóveis:', queryError);
       setError('Não foi possível actualizar os imóveis agora.');
-      setProperties(PROPERTIES);
+      setProperties([]);
     } else {
       setProperties((data || []).map(mapProperty));
     }
