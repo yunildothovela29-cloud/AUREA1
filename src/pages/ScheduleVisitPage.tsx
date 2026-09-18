@@ -166,7 +166,7 @@ export const ScheduleVisitPage: React.FC = () => {
           <p className="text-xs text-[#7A8495] text-center">{BRAND_CONFIG.phoneDisplay} · {BRAND_CONFIG.email}</p>
         </form>
       </section>
-      <style>{'.label{display:block;font-size:13px;font-weight:600;color:#14245F;margin-bottom:7px}.field{width:100%;padding:12px 14px;border:1px solid #E1E6EE;border-radius:12px;background:#F7F9FC;color:#14245F;outline:none;font-size:14px}.field:focus{border-color:#14245F;box-shadow:0 0 0 3px rgba(20,36,95,.08)}.icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:#8A95A7;pointer-events:none}'}</style>
+      <style>{'.label{display:block;font-size:13px;font-weight:600;color:#14245F;margin-bottom:7px}.field{width:100%;box-sizing:border-box;min-height:46px;padding:12px 14px;border:1px solid #E1E6EE;border-radius:12px;background:#F7F9FC;color:#14245F;outline:none;font-size:14px;line-height:1.4}.field:focus{border-color:#14245F;box-shadow:0 0 0 3px rgba(20,36,95,.08)}.field.pl-10{padding-left:42px}.icon{position:absolute;left:12px;top:0;bottom:0;margin:auto;width:16px;height:16px;color:#8A95A7;pointer-events:none}'}</style>
     </div>
   );
 };
