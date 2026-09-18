@@ -1,165 +1,85 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { PROPERTIES } from '../data/properties';
+import { SearchX } from 'lucide-react';
 import { PropertyCard } from '../components/PropertyCard';
 import { PropertyFilter } from '../components/PropertyFilter';
 import { FilterState } from '../types';
-import { SearchX } from 'lucide-react';
+import { useProperties } from '../hooks/useProperties';
 
 export const RentPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const initialLocation = searchParams.get('bairro') || '';
-  const initialType = searchParams.get('tipo') || '';
-  const initialMaxPrice = searchParams.get('precoMax') ? Number(searchParams.get('precoMax')) : '';
-
-  const initialFilters: FilterState = {
+  const { properties, loading } = useProperties();
+  const [filters, setFilters] = useState<FilterState>({
     searchQuery: '',
     operation: 'arrendamento',
-    location: initialLocation,
-    type: initialType,
+    location: searchParams.get('bairro') || '',
+    type: searchParams.get('tipo') || '',
     minPrice: '',
-    maxPrice: initialMaxPrice,
+    maxPrice: searchParams.get('precoMax') ? Number(searchParams.get('precoMax')) : '',
     bedrooms: '',
     sortBy: 'featured',
-  };
-
-  const [filters, setFilters] = useState<FilterState>(initialFilters);
+  });
 
   useEffect(() => {
-    const loc = searchParams.get('bairro') || '';
-    const typ = searchParams.get('tipo') || '';
-    const maxP = searchParams.get('precoMax') ? Number(searchParams.get('precoMax')) : '';
     setFilters((prev) => ({
       ...prev,
-      location: loc,
-      type: typ,
-      maxPrice: maxP,
+      location: searchParams.get('bairro') || '',
+      type: searchParams.get('tipo') || '',
+      maxPrice: searchParams.get('precoMax') ? Number(searchParams.get('precoMax')) : '',
     }));
   }, [searchParams]);
 
-  const handleFilterChange = (updated: Partial<FilterState>) => {
-    setFilters((prev) => ({ ...prev, ...updated }));
-  };
-
-  const handleReset = () => {
-    setFilters({
-      searchQuery: '',
-      operation: 'arrendamento',
-      location: '',
-      type: '',
-      minPrice: '',
-      maxPrice: '',
-      bedrooms: '',
-      sortBy: 'featured',
-    });
-    setSearchParams({});
-  };
-
-  // Filter and sort properties for rent
-  const filteredProperties = useMemo(() => {
-    return PROPERTIES.filter((p) => {
-      // Must be for rent
-      if (p.operation !== 'arrendamento') return false;
-
-      // Text search
-      if (filters.searchQuery) {
-        const query = filters.searchQuery.toLowerCase();
-        const matchesTitle = p.title.toLowerCase().includes(query);
-        const matchesLoc = p.location.toLowerCase().includes(query) || p.neighborhood.toLowerCase().includes(query);
-        const matchesDesc = p.description.toLowerCase().includes(query);
-        const matchesAmenities = p.amenities.some((a) => a.toLowerCase().includes(query));
-        if (!matchesTitle && !matchesLoc && !matchesDesc && !matchesAmenities) return false;
-      }
-
-      // Location match
-      if (filters.location && p.location !== filters.location) {
-        return false;
-      }
-
-      // Type match
-      if (filters.type && p.type !== filters.type) {
-        return false;
-      }
-
-      // Bedrooms match
-      if (filters.bedrooms && p.bedrooms < Number(filters.bedrooms)) {
-        return false;
-      }
-
-      // Min Price
-      if (filters.minPrice !== '' && p.price < Number(filters.minPrice)) {
-        return false;
-      }
-
-      // Max Price
-      if (filters.maxPrice !== '' && p.price > Number(filters.maxPrice)) {
-        return false;
-      }
-
-      return true;
-    }).sort((a, b) => {
+  const results = useMemo(() => properties
+    .filter((p) => p.operation === 'arrendamento')
+    .filter((p) => {
+      const q = filters.searchQuery.trim().toLowerCase();
+      if (!q) return true;
+      return [p.title, p.location, p.neighborhood, p.description, ...(p.amenities || [])]
+        .join(' ').toLowerCase().includes(q);
+    })
+    .filter((p) => !filters.location || p.location === filters.location)
+    .filter((p) => !filters.type || p.type === filters.type)
+    .filter((p) => !filters.bedrooms || p.bedrooms >= Number(filters.bedrooms))
+    .filter((p) => filters.minPrice === '' || p.price >= Number(filters.minPrice))
+    .filter((p) => filters.maxPrice === '' || p.price <= Number(filters.maxPrice))
+    .sort((a, b) => {
       if (filters.sortBy === 'price-asc') return a.price - b.price;
       if (filters.sortBy === 'price-desc') return b.price - a.price;
       if (filters.sortBy === 'area-desc') return b.area - a.area;
-      if (a.featured && !b.featured) return -1;
-      if (!a.featured && b.featured) return 1;
-      return 0;
-    });
-  }, [filters]);
+      return Number(b.featured) - Number(a.featured);
+    }), [properties, filters]);
+
+  const reset = () => {
+    setFilters({ searchQuery: '', operation: 'arrendamento', location: '', type: '', minPrice: '', maxPrice: '', bedrooms: '', sortBy: 'featured' });
+    setSearchParams({});
+  };
 
   return (
-    <div className="pt-32 pb-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-[#261B14]">
-      {/* Header section */}
-      <div className="max-w-3xl mb-14">
-        <span className="text-xs uppercase tracking-[0.25em] text-[#825A39] font-semibold block mb-4">
-          Residências & Escritórios
-        </span>
-        <h1 className="font-serif text-4xl sm:text-5xl text-[#221A15] font-normal tracking-tight mb-4">
-          Imóveis para Arrendar
-        </h1>
-        <p className="text-base text-[#5E5249] leading-relaxed tracking-wide">
-          Propriedades mobiladas ou vazias seleccionadas com rigor para corpo diplomático, directores executivos e famílias que valorizam conforto imediato em Maputo.
-        </p>
-      </div>
-
-      {/* Filter Bar */}
-      <PropertyFilter
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        onReset={handleReset}
-        totalCount={filteredProperties.length}
-        hideOperationFilter
-      />
-
-      {/* Properties Grid */}
-      {filteredProperties.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 lg:gap-y-20 lg:gap-x-10 mt-12">
-          {filteredProperties.map((prop) => (
-            <PropertyCard key={prop.id} property={prop} />
-          ))}
+    <div className="pt-28 pb-20 bg-[#F7F9FC] min-h-screen">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="mb-6">
+          <span className="text-xs uppercase tracking-[0.18em] text-[#D93030] font-bold">{mode === 'buy' ? 'Venda' : 'Arrendamento'}</span>
+          <h1 className="text-3xl sm:text-4xl font-semibold text-[#14245F] mt-2">Imóveis para arrendar</h1>
+          <p className="text-sm sm:text-base text-[#667085] mt-2 max-w-2xl">Casas e apartamentos disponíveis para arrendamento. Veja os detalhes e marque uma visita.</p>
         </div>
-      ) : (
-        /* Empty State */
-        <div className="bg-white border border-[#E8E2D6] rounded-3xl p-12 text-center max-w-md mx-auto my-12 shadow-xs">
-          <div className="w-14 h-14 rounded-full bg-[#FAF5EE] border border-[#E8E2D6] flex items-center justify-center mx-auto mb-4 text-[#825A39]">
-            <SearchX className="w-6 h-6" />
+
+        <PropertyFilter filters={filters} onFilterChange={(update) => setFilters((prev) => ({ ...prev, ...update }))} onReset={reset} totalCount={results.length} hideOperationFilter />
+
+        {loading ? (
+          <div className="py-16 text-center text-sm text-[#667085]">A carregar imóveis…</div>
+        ) : results.length ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-7">
+            {results.map((property) => <PropertyCard key={property.id} property={property} />)}
           </div>
-          <h3 className="font-serif text-xl font-normal text-[#221A15] mb-2">
-            Nenhum imóvel para arrendamento encontrado
-          </h3>
-          <p className="text-xs text-[#6B5E54] mb-6 leading-relaxed">
-            Não encontramos propriedades para arrendamento com os parâmetros actuais. Tente redefinir os filtros.
-          </p>
-          <button
-            type="button"
-            onClick={handleReset}
-            className="px-5 py-2.5 rounded-full bg-[#3E2819] text-[#FAF8F5] text-xs font-semibold uppercase tracking-wider hover:bg-[#26180E] transition-colors cursor-pointer"
-          >
-            Limpar todos os filtros
-          </button>
-        </div>
-      )}
+        ) : (
+          <div className="bg-white border border-dashed border-[#C7CFDC] rounded-2xl py-16 px-5 text-center mt-7">
+            <SearchX className="w-6 h-6 text-[#8A95A7] mx-auto" />
+            <h3 className="text-lg font-semibold text-[#14245F] mt-3">Nenhum imóvel encontrado</h3>
+            <p className="text-sm text-[#667085] mt-2">Não encontramos imóveis para arrendar com estes filtros.</p>
+            <button onClick={reset} className="mt-5 px-4 py-2.5 rounded-xl bg-[#14245F] text-white text-sm font-semibold">Limpar filtros</button>
+          </div>
+        )}
+      </section>
     </div>
   );
 };
