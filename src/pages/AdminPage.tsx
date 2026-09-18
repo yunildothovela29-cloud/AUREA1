@@ -154,7 +154,17 @@ export const AdminPage: React.FC = () => {
       password,
     });
 
-    if (authError) setLoginError('Email ou palavra-passe inválidos.');
+    if (authError) {
+      console.error('Supabase Auth error:', authError);
+      const msg = String(authError.message || '').toLowerCase();
+      if (msg.includes('email not confirmed') || msg.includes('email not verified')) {
+        setLoginError('O email desta conta Supabase ainda não foi confirmado. Confirme-o em Authentication → Users ou desactive Confirm Email para esta conta.');
+      } else if (msg.includes('invalid login credentials')) {
+        setLoginError('Credenciais inválidas. Confirme que este email existe no Supabase Authentication e que a palavra-passe é a definida no Supabase.');
+      } else {
+        setLoginError('Supabase não aceitou o login: ' + authError.message);
+      }
+    }
     setAuthLoading(false);
   };
 
