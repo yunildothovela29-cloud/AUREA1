@@ -68,7 +68,7 @@ export const RentPage: React.FC = () => {
         {loading ? (
           <div className="py-16 text-center text-sm text-[#667085]">A carregar imóveis…</div>
         ) : results.length ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-7">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-7 sm:gap-5 lg:gap-6 mt-7">
             {results.map((property) => <PropertyCard key={property.id} property={property} />)}
           </div>
         ) : (
