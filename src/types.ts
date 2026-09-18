@@ -32,8 +32,10 @@ export interface Property {
   priceDisplay: string;
   pricePeriod?: string; // '/mês' for rentals
   currency: string;
+  rooms: number;
   bedrooms: number;
   bathrooms: number;
+  kitchens: number;
   suites?: number;
   area: number; // m²
   parking: number;
