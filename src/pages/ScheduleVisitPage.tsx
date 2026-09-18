@@ -12,7 +12,7 @@ export const ScheduleVisitPage: React.FC = () => {
   const navigate = useNavigate();
   const { properties, loading } = useProperties();
   const selectedId = searchParams.get('imovel') || '';
-  const selectedProperty = useMemo(() => properties.find((p) => p.id === selectedId || p.slug === selectedId), [properties, selectedId]);
+  const selectedProperty = useMemo(() => properties.find((p) => p.id === propertyId || p.slug === propertyId), [properties, propertyId]);
 
   const [propertyId, setPropertyId] = useState(selectedId);
   const [fullName, setFullName] = useState('');
