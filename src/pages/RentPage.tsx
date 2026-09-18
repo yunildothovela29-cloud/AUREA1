@@ -58,7 +58,7 @@ export const RentPage: React.FC = () => {
     <div className="pt-28 pb-20 bg-[#F7F9FC] min-h-screen">
       <section className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="mb-6">
-          <span className="text-xs uppercase tracking-[0.18em] text-[#D93030] font-bold">{mode === 'buy' ? 'Venda' : 'Arrendamento'}</span>
+          <span className="text-xs uppercase tracking-[0.18em] text-[#D93030] font-bold">Arrendamento</span>
           <h1 className="text-3xl sm:text-4xl font-semibold text-[#14245F] mt-2">Imóveis para arrendar</h1>
           <p className="text-sm sm:text-base text-[#667085] mt-2 max-w-2xl">Casas e apartamentos disponíveis para arrendamento. Veja os detalhes e marque uma visita.</p>
         </div>
