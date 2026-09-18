@@ -4,7 +4,7 @@ import {
   CalendarDays, Check, Edit3, Home, LogOut, Mail, MapPin, Plus,
   RefreshCw, Save, Trash2, Upload, X,
 } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { isSupabaseConfigured, supabase } from '../lib/supabase';
 import { BRAND_CONFIG } from '../data/config';
 import { OperationType, Property, PropertyType } from '../types';
 import { BrandLogo } from '../components/BrandLogo';
@@ -137,6 +137,11 @@ export const AdminPage: React.FC = () => {
   const login = async (event: FormEvent) => {
     event.preventDefault();
     setLoginError('');
+
+    if (!isSupabaseConfigured) {
+      setLoginError('O site ainda não recebeu as variáveis VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY no Vercel.');
+      return;
+    }
 
     if (email.toLowerCase().trim() !== BRAND_CONFIG.admin.email.toLowerCase()) {
       setLoginError('Esta área está reservada ao administrador da 2S.');
