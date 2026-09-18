@@ -27,7 +27,7 @@ function AppLayout() {
 
   if (isAdmin) {
     return (
-      <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#261B14]">
+      <div className="min-h-screen flex flex-col bg-[#F7F9FC] text-[#14245F]">
         <ScrollToTop />
         <main className="flex-1">
           <Outlet />
@@ -37,7 +37,7 @@ function AppLayout() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-[#261B14]">
+    <div className="min-h-screen flex flex-col bg-[#F7F9FC] text-[#14245F]">
       <ScrollToTop />
       <Header />
       <main className="flex-1">
