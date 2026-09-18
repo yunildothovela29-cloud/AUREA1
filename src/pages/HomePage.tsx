@@ -76,7 +76,7 @@ export const HomePage: React.FC = () => {
         {loading ? (
           <div className="py-20 grid place-items-center text-[#14245F]"><Loader2 className="w-7 h-7 animate-spin" /></div>
         ) : visible.length ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-7 sm:gap-5 lg:gap-6">
             {visible.map((property) => <PropertyCard key={property.id} property={property} />)}
           </div>
         ) : (
