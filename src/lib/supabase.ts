@@ -1,9 +1,18 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
+const env = import.meta.env as Record<string, string | undefined>;
 
-export const isSupabaseConfigured = Boolean(supabaseUrl && supabasePublishableKey);
+const supabaseUrl =
+  env.NEXT_PUBLIC_SUPABASE_URL ||
+  env.VITE_SUPABASE_URL;
+
+const supabasePublishableKey =
+  env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+export const isSupabaseConfigured = Boolean(
+  supabaseUrl && supabasePublishableKey
+);
 
 export const supabase: SupabaseClient = createClient(
   supabaseUrl || 'https://placeholder.supabase.co',
