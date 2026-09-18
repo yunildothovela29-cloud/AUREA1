@@ -68,10 +68,11 @@ export const PropertyDetailPage: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-7">
+              <div className="rounded-xl bg-[#F7F9FC] p-4"><span className="font-bold text-[#D93030]">S</span><p className="text-xs text-[#7A8495] mt-2">Salas</p><p className="font-semibold text-[#14245F] mt-0.5">{property.rooms || '—'}</p></div>
               <div className="rounded-xl bg-[#F7F9FC] p-4"><BedDouble className="w-4 h-4 text-[#D93030]" /><p className="text-xs text-[#7A8495] mt-2">Quartos</p><p className="font-semibold text-[#14245F] mt-0.5">{property.bedrooms || '—'}</p></div>
               <div className="rounded-xl bg-[#F7F9FC] p-4"><Bath className="w-4 h-4 text-[#D93030]" /><p className="text-xs text-[#7A8495] mt-2">Banhos</p><p className="font-semibold text-[#14245F] mt-0.5">{property.bathrooms || '—'}</p></div>
+              <div className="rounded-xl bg-[#F7F9FC] p-4"><span className="font-bold text-[#D93030]">C</span><p className="text-xs text-[#7A8495] mt-2">Cozinhas</p><p className="font-semibold text-[#14245F] mt-0.5">{property.kitchens || '—'}</p></div>
               <div className="rounded-xl bg-[#F7F9FC] p-4"><Ruler className="w-4 h-4 text-[#D93030]" /><p className="text-xs text-[#7A8495] mt-2">Área</p><p className="font-semibold text-[#14245F] mt-0.5">{property.area || '—'} m²</p></div>
-              <div className="rounded-xl bg-[#F7F9FC] p-4"><span className="text-[#D93030] font-bold">P</span><p className="text-xs text-[#7A8495] mt-2">Estacionamento</p><p className="font-semibold text-[#14245F] mt-0.5">{property.parking || '—'}</p></div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_330px] gap-9 mt-9">
