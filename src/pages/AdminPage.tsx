@@ -12,14 +12,14 @@ import { BrandLogo } from '../components/BrandLogo';
 type PropertyForm = {
   title: string; operation: OperationType; type: PropertyType; location: string;
   neighborhood: string; address: string; price: string; pricePeriod: string;
-  bedrooms: string; bathrooms: string; suites: string; area: string; parking: string;
+  rooms: string; bathrooms: string; bedrooms: string; kitchens: string; area: string; parking: string;
   description: string; longDescription: string; highlights: string; amenities: string;
   images: string[]; featured: boolean; status: Property['status'];
 };
 
 const emptyForm: PropertyForm = {
   title: '', operation: 'venda', type: 'Moradia', location: '', neighborhood: '', address: '',
-  price: '', pricePeriod: '', bedrooms: '3', bathrooms: '2', suites: '0', area: '', parking: '1',
+  price: '', pricePeriod: '', rooms: '', bathrooms: '', bedrooms: '', kitchens: '', area: '', parking: '',
   description: '', longDescription: '', highlights: '', amenities: '', images: [],
   featured: false, status: 'Disponível',
 };
@@ -179,7 +179,7 @@ export const AdminPage: React.FC = () => {
       title: property.title, operation: property.operation, type: property.type,
       location: property.location, neighborhood: property.neighborhood, address: property.address,
       price: String(property.price), pricePeriod: property.pricePeriod || '',
-      bedrooms: String(property.bedrooms), bathrooms: String(property.bathrooms),
+      rooms: String(property.rooms || ''), bathrooms: String(property.bathrooms || ''), bedrooms: String(property.bedrooms || ''), kitchens: String(property.kitchens || ''),
       suites: String(property.suites || 0), area: String(property.area), parking: String(property.parking),
       description: property.description, longDescription: property.longDescription.join('\n'),
       highlights: property.highlights.join(', '), amenities: property.amenities.join(', '),
@@ -244,8 +244,10 @@ export const AdminPage: React.FC = () => {
       price_display: new Intl.NumberFormat('pt-MZ').format(priceNumber) + ' MT',
       price_period: form.operation === 'arrendamento' ? (form.pricePeriod.trim() || '/mês') : null,
       currency: 'MT',
-      bedrooms: Number(form.bedrooms) || 0,
+      rooms: Number(form.rooms) || 0,
       bathrooms: Number(form.bathrooms) || 0,
+      bedrooms: Number(form.bedrooms) || 0,
+      kitchens: Number(form.kitchens) || 0,
       suites: Number(form.suites) || 0,
       area: Number(form.area) || 0,
       parking: Number(form.parking) || 0,
@@ -349,7 +351,7 @@ export const AdminPage: React.FC = () => {
                 <div className="grid grid-cols-2 gap-2"><input className="field" value={form.location} onChange={(e) => setField('location', e.target.value)} placeholder="Zona" /><input className="field" value={form.neighborhood} onChange={(e) => setField('neighborhood', e.target.value)} placeholder="Bairro" /></div>
                 <input className="field" value={form.address} onChange={(e) => setField('address', e.target.value)} placeholder="Morada / localização" />
                 <div className="grid grid-cols-2 gap-2"><input className="field" value={form.price} onChange={(e) => setField('price', e.target.value)} type="number" min="0" placeholder="Preço MT" /><input className="field" value={form.pricePeriod} onChange={(e) => setField('pricePeriod', e.target.value)} placeholder="/mês" /></div>
-                <div className="grid grid-cols-4 gap-2"><input className="field" value={form.bedrooms} onChange={(e) => setField('bedrooms', e.target.value)} type="number" min="0" placeholder="Q" /><input className="field" value={form.bathrooms} onChange={(e) => setField('bathrooms', e.target.value)} type="number" min="0" placeholder="B" /><input className="field" value={form.suites} onChange={(e) => setField('suites', e.target.value)} type="number" min="0" placeholder="S" /><input className="field" value={form.parking} onChange={(e) => setField('parking', e.target.value)} type="number" min="0" placeholder="P" /></div>
+                <div className="grid grid-cols-4 gap-2"><label className="compact-stat"><span>S</span><small>Salas</small><input value={form.rooms} onChange={(e) => setField('rooms', e.target.value)} type="number" min="0" placeholder="—" /></label><label className="compact-stat"><span>B</span><small>Banhos</small><input value={form.bathrooms} onChange={(e) => setField('bathrooms', e.target.value)} type="number" min="0" placeholder="—" /></label><label className="compact-stat"><span>Q</span><small>Quartos</small><input value={form.bedrooms} onChange={(e) => setField('bedrooms', e.target.value)} type="number" min="0" placeholder="—" /></label><label className="compact-stat"><span>C</span><small>Cozinhas</small><input value={form.kitchens} onChange={(e) => setField('kitchens', e.target.value)} type="number" min="0" placeholder="—" /></label></div>
                 <input className="field" value={form.area} onChange={(e) => setField('area', e.target.value)} type="number" min="0" placeholder="Área m²" />
                 <textarea className="field min-h-20" value={form.description} onChange={(e) => setField('description', e.target.value)} placeholder="Descrição curta" />
                 <textarea className="field min-h-20" value={form.longDescription} onChange={(e) => setField('longDescription', e.target.value)} placeholder="Detalhes adicionais — uma linha por parágrafo" />
@@ -389,7 +391,7 @@ export const AdminPage: React.FC = () => {
           </section>
         )}
       </main>
-      <style>{'.field{width:100%;padding:11px 12px;border:1px solid #DDE3EE;border-radius:12px;background:#FAFBFC;color:#14245F;font-size:14px;outline:none}.field:focus{border-color:#14245F;box-shadow:0 0 0 3px rgba(20,36,95,.08)}'}</style>
+      <style>{'.field{width:100%;box-sizing:border-box;padding:11px 12px;border:1px solid #DDE3EE;border-radius:12px;background:#FAFBFC;color:#14245F;font-size:14px;line-height:1.35;outline:none}.field:focus{border-color:#14245F;box-shadow:0 0 0 3px rgba(20,36,95,.08)}.compact-stat{display:flex;flex-direction:column;gap:2px;padding:9px 8px;border:1px solid #DDE3EE;border-radius:12px;background:#FAFBFC}.compact-stat span{font-size:13px;font-weight:800;color:#14245F}.compact-stat small{font-size:9px;color:#7A8495}.compact-stat input{width:100%;box-sizing:border-box;margin-top:3px;border:0;background:transparent;outline:none;font-size:15px;font-weight:600;color:#14245F;min-width:0}.compact-stat input::placeholder{color:#A7AFBC}'}</style>
     </div>
   );
 };
