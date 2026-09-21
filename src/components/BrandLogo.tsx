@@ -7,7 +7,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ compact = false, light = f
   const red = '#D93030';
 
   return (
-    <div className={'flex items-center gap-3 ' + className} aria-label="2S Imobiliária & Serviços">
+    <div className={'flex items-center gap-3 ' + className} aria-label="2Simoveis">
       <div className="flex items-center justify-center shrink-0 select-none" style={{ color: red }}>
         <span
           className="font-black italic leading-none tracking-[-0.12em]"
