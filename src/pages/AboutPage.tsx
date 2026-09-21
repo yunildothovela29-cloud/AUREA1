@@ -7,7 +7,7 @@ export const AboutPage: React.FC = () => (
   <div className="pt-28 pb-20 min-h-screen bg-[#F7F9FC]">
     <section className="max-w-5xl mx-auto px-4 sm:px-6">
       <div className="max-w-3xl mb-8">
-        <p className="text-xs font-semibold text-[#D93030]">Sobre a 2Simoveis</p>
+        <p className="text-xs font-semibold text-[#D93030]">Sobre a 2Simoveisimoveis</p>
         <h1 className="text-3xl sm:text-4xl font-semibold text-[#14245F] mt-2">Imobiliária & Serviços</h1>
         <p className="text-sm sm:text-base text-[#667085] mt-3 leading-relaxed">
           A 2S apresenta imóveis para venda e arrendamento e facilita o contacto entre quem procura uma propriedade e a nossa equipa em Maputo.
