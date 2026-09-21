@@ -13,7 +13,7 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
 
   useEffect(() => {
     // Check if user has already seen intro in this session
-    const hasSeen = sessionStorage.getItem('aurea_intro_seen');
+    const hasSeen = sessionStorage.getItem('2simoveis_intro_seen');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (hasSeen || prefersReducedMotion) {
@@ -42,7 +42,7 @@ export const OpeningAnimation: React.FC<OpeningAnimationProps> = ({ onComplete }
   }, []);
 
   const handleFinish = () => {
-    sessionStorage.setItem('aurea_intro_seen', 'true');
+    sessionStorage.setItem('2simoveis_intro_seen', 'true');
     setDismissed(true);
     setTimeout(() => {
       onComplete();
