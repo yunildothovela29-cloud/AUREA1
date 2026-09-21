@@ -7,7 +7,7 @@ export const ContactPage: React.FC = () => (
     <section className="max-w-5xl mx-auto px-4 sm:px-6">
       <div className="mb-7">
         <span className="text-xs uppercase tracking-[0.18em] text-[#D93030] font-bold">Contactos</span>
-        <h1 className="text-3xl sm:text-4xl font-semibold text-[#14245F] mt-2">Fale com a 2S</h1>
+        <h1 className="text-3xl sm:text-4xl font-semibold text-[#14245F] mt-2">Fale com a 2Simoveis</h1>
         <p className="text-sm sm:text-base text-[#667085] mt-2 max-w-2xl">
           Para saber mais sobre um imóvel, marcar uma visita ou colocar uma propriedade no nosso portfólio, fale directamente com a equipa.
         </p>
@@ -45,7 +45,7 @@ export const ContactPage: React.FC = () => (
           <p className="text-xs uppercase tracking-[0.18em] text-white/60 font-bold">Agendar uma visita</p>
           <h2 className="text-2xl font-semibold mt-2">Já encontrou uma casa?</h2>
           <p className="text-sm text-white/70 mt-3 leading-relaxed">
-            Abra a propriedade, escolha a data e a hora e preencha os seus dados. O site prepara a mensagem para o WhatsApp da 2S.
+            Abra a propriedade, escolha a data e a hora e preencha os seus dados. O site prepara a mensagem para o WhatsApp da 2Simoveis.
           </p>
           <a
             href="/agendar"
