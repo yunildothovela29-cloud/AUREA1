@@ -28,7 +28,7 @@ export const Header: React.FC = () => {
   return (
     <header className={'fixed inset-x-0 top-0 z-40 border-b transition-all ' + (scrolled ? 'bg-white/95 backdrop-blur shadow-sm border-[#E5E9F1]' : 'bg-white border-[#EEF1F5]')}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[78px] flex items-center justify-between gap-5">
-        <Link to="/" aria-label="2S Imobiliária & Serviços"><BrandLogo /></Link>
+        <Link to="/" aria-label="2Simoveis"><BrandLogo /></Link>
 
         <nav className="hidden md:flex items-center gap-7">
           {links.map((link) => {
