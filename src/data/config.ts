@@ -1,5 +1,5 @@
 export const BRAND_CONFIG = {
-  name: '2S IMOBILIÁRIA & SERVIÇOS',
+  name: '2Simoveis',
   shortName: '2S',
   introBrandSymbol: '2S',
   introSubtitle: 'Acesso Privado',
@@ -9,7 +9,7 @@ export const BRAND_CONFIG = {
   phoneDisplay: '+258 84 406 7591',
   email: 'sergio.sulemane@gmail.com',
   whatsappNumber: '258844067591',
-  whatsappDefaultMessage: 'Olá, gostaria de obter informações sobre os imóveis da 2S Imobiliária & Serviços.',
+  whatsappDefaultMessage: 'Olá, gostaria de obter informações sobre os imóveis da 2Simoveis.',
   admin: { email: 'sergio.sulemane@gmail.com', whatsappNumber: '258844067591' },
   location: { city: 'Maputo', country: 'Moçambique' },
   officeHours: { weekdays: 'Segunda a Sexta: 08:30 – 18:30', saturdays: 'Sábado: 09:00 – 14:00' },
