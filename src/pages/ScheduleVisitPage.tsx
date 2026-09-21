@@ -153,7 +153,7 @@ export const ScheduleVisitPage: React.FC = () => {
           <div><label className="label">Mensagem (opcional)</label><textarea value={message} onChange={(e) => setMessage(e.target.value)} className="field min-h-24" placeholder="Alguma informação adicional?" /></div>
 
           <div className="rounded-2xl bg-[#F5F7FA] border border-[#E1E6EE] p-4 text-sm text-[#566176]">
-            O pedido será guardado no painel da 2S e o WhatsApp abrirá com a mensagem preparada para o cliente confirmar e enviar.
+            O pedido será guardado no painel da 2Simoveis e o WhatsApp abrirá com a mensagem preparada para o cliente confirmar e enviar.
           </div>
 
           {error && <p className="text-sm text-[#B42318]">{error}</p>}
