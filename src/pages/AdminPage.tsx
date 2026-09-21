@@ -305,7 +305,7 @@ export const AdminPage: React.FC = () => {
           <BrandLogo className="justify-center mb-7" />
           <div className="text-center mb-6">
             <p className="text-[10px] uppercase tracking-[0.2em] text-[#D93030] font-bold">Área privada</p>
-            <h1 className="text-2xl font-semibold text-[#14245F] mt-2">Administrador 2S</h1>
+            <h1 className="text-2xl font-semibold text-[#14245F] mt-2">Administrador 2Simoveis</h1>
             <p className="text-sm text-[#667085] mt-2">Apenas a conta autorizada pode entrar neste painel.</p>
           </div>
           <form onSubmit={login} className="space-y-3">
