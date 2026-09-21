@@ -29,7 +29,7 @@ export const HomePage: React.FC = () => {
         <div className="bg-white border border-[#E1E6EE] rounded-2xl p-7 sm:p-10 mb-6 shadow-sm">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-7">
             <div>
-              <p className="text-sm font-semibold text-[#D93030] mb-2">2S Imobiliária & Serviços · Maputo</p>
+              <p className="text-sm font-semibold text-[#D93030] mb-2">2Simoveis · Maputo</p>
               <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#14245F] max-w-2xl">
                 Encontre um imóvel em Maputo.
               </h1>
