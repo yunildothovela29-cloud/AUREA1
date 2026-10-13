@@ -53,6 +53,8 @@ export const ScheduleVisitPage: React.FC = () => {
       propertyId: property.id,
       preferredDate: date,
       preferredTime: time,
+      propertyAddress: property.address,
+      extraMessage: message.trim(),
     };
     const whatsappUrl = getVisitWhatsAppUrl(booking);
     const whatsappWindow = window.open('about:blank', '_blank');
