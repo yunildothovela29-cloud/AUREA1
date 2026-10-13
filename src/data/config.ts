@@ -27,14 +27,40 @@ export function getPropertyWhatsAppUrl(propertyTitle: string, propertyId: string
 export function getVisitWhatsAppUrl(data: {
   clientName: string; clientPhone: string; clientEmail: string;
   propertyTitle: string; propertyId: string; preferredDate: string; preferredTime: string;
+  propertyAddress?: string; extraMessage?: string;
 }): string {
-  const message = [
-    'Olá Sérgio, chamo-me ' + data.clientName + '.',
-    'Gostei da propriedade "' + data.propertyTitle + '" (Ref: ' + data.propertyId + ') e quero marcar uma visita.',
-    'Dia: ' + data.preferredDate,
-    'Hora: ' + data.preferredTime,
-    'Meu telefone: ' + data.clientPhone,
-    'Meu email: ' + data.clientEmail,
-  ].join('\n');
-  return 'https://wa.me/' + BRAND_CONFIG.admin.whatsappNumber + '?text=' + encodeURIComponent(message);
+  // Parse at midday to avoid timezone shifts changing the displayed calendar day.
+  const parsedDate = data.preferredDate
+    ? new Date(data.preferredDate + 'T12:00:00')
+    : null;
+  const formattedDate = parsedDate && !Number.isNaN(parsedDate.getTime())
+    ? new Intl.DateTimeFormat('pt-MZ', {
+        weekday: 'long', day: '2-digit', month: 'long', year: 'numeric',
+      }).format(parsedDate)
+    : data.preferredDate;
+
+  const lines = [
+    'Boa tarde, Sérgio. Gostaria de marcar uma visita a esta propriedade.',
+    '',
+    'DADOS DO IMÓVEL',
+    '• Imóvel: ' + data.propertyTitle,
+    '• Referência: ' + data.propertyId,
+    ...(data.propertyAddress ? ['• Localização: ' + data.propertyAddress] : []),
+    '',
+    'DATA E HORA PRETENDIDAS',
+    '• Dia: ' + formattedDate,
+    '• Hora: ' + data.preferredTime,
+    '',
+    'DADOS DO CLIENTE',
+    '• Nome: ' + data.clientName,
+    '• Telefone: ' + data.clientPhone,
+    '• Email: ' + data.clientEmail,
+  ];
+
+  if (data.extraMessage?.trim()) {
+    lines.push('', 'INFORMAÇÃO ADICIONAL', data.extraMessage.trim());
+  }
+
+  lines.push('', 'Fico a aguardar a confirmação da disponibilidade. Obrigado/a.');
+  return 'https://wa.me/' + BRAND_CONFIG.admin.whatsappNumber + '?text=' + encodeURIComponent(lines.join('\n'));
 }
