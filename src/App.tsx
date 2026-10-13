@@ -9,6 +9,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ScrollToTop } from './components/ScrollToTop';
+import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -45,6 +46,7 @@ function AppLayout() {
       </main>
       <Footer />
       <FloatingWhatsApp />
+      <PWAInstallPrompt />
     </div>
   );
 }
