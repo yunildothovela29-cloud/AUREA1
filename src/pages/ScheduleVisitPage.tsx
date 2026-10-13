@@ -57,13 +57,8 @@ export const ScheduleVisitPage: React.FC = () => {
       extraMessage: message.trim(),
     };
     const whatsappUrl = getVisitWhatsAppUrl(booking);
-    const whatsappWindow = window.open('about:blank', '_blank');
-
-    if (whatsappWindow) {
-      whatsappWindow.opener = null;
-      whatsappWindow.document.title = 'A abrir WhatsApp…';
-      whatsappWindow.document.body.innerHTML = '<p style="font-family: sans-serif; padding: 24px">A preparar a mensagem para o WhatsApp do Sérgio…</p>';
-    }
+    // Open WhatsApp immediately during the user's click, before any network wait.
+    const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
     setSaving(true);
 
@@ -115,11 +110,9 @@ export const ScheduleVisitPage: React.FC = () => {
 
     setSaving(false);
 
-    if (whatsappWindow && !whatsappWindow.closed) {
-      whatsappWindow.location.href = whatsappUrl;
-    } else {
-      // Fallback if the browser blocked the new tab.
-      window.location.href = whatsappUrl;
+    if (!whatsappWindow) {
+      // If popups are blocked, offer a direct link instead of silently failing.
+      setError('O navegador bloqueou a abertura automática do WhatsApp. Permita pop-ups para este site ou abra este link: ' + whatsappUrl);
     }
 
     if (!saved) {
