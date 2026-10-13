@@ -43,60 +43,87 @@ export const ScheduleVisitPage: React.FC = () => {
       return;
     }
 
+    // Prepare WhatsApp before awaiting network requests, so browser popup
+    // blockers do not prevent the client from contacting the agent.
+    const booking = {
+      clientName: fullName.trim(),
+      clientPhone: phone.trim(),
+      clientEmail: email.trim(),
+      propertyTitle: property.title,
+      propertyId: property.id,
+      preferredDate: date,
+      preferredTime: time,
+    };
+    const whatsappUrl = getVisitWhatsAppUrl(booking);
+    const whatsappWindow = window.open('about:blank', '_blank');
+
+    if (whatsappWindow) {
+      whatsappWindow.opener = null;
+      whatsappWindow.document.title = 'A abrir WhatsApp…';
+      whatsappWindow.document.body.innerHTML = '<p style="font-family: sans-serif; padding: 24px">A preparar a mensagem para o WhatsApp do Sérgio…</p>';
+    }
+
     setSaving(true);
 
-    if (!isSupabaseConfigured) {
-      setError('O agendamento ainda não está disponível porque o Supabase não foi configurado no site.');
-      setSaving(false);
-      return;
+    // WhatsApp remains the primary path. A database/schema/network error
+    // must never cancel the user's ability to send the visit request.
+    let saved = false;
+    let saveErrorMessage = '';
+
+    if (isSupabaseConfigured) {
+      const payload = {
+        property_id: property.id,
+        property_title: property.title,
+        property_location: property.address,
+        client_name: booking.clientName,
+        client_phone: booking.clientPhone,
+        client_email: booking.clientEmail,
+        preferred_date: booking.preferredDate,
+        preferred_time: booking.preferredTime,
+        message: message.trim() || null,
+        status: 'pendente',
+      };
+
+      try {
+        const { error: insertError } = await supabase.from('visits').insert(payload);
+        if (insertError) {
+          console.error('Erro ao guardar pedido de visita:', insertError);
+          saveErrorMessage = insertError.message;
+        } else {
+          saved = true;
+        }
+      } catch (err) {
+        console.error('Falha inesperada ao guardar pedido de visita:', err);
+        saveErrorMessage = err instanceof Error ? err.message : 'Erro inesperado';
+      }
+    } else {
+      saveErrorMessage = 'Supabase não configurado';
     }
 
-    const payload = {
-      property_id: property.id,
-      property_title: property.title,
-      property_location: property.address,
-      client_name: fullName.trim(),
-      client_phone: phone.trim(),
-      client_email: email.trim(),
-      preferred_date: date,
-      preferred_time: time,
-      message: message.trim() || null,
-      status: 'pendente',
-    };
-
-    const { error: insertError } = await supabase
-      .from('visits')
-      .insert(payload);
-
-    if (insertError) {
-      console.error(insertError);
-      setError('Não foi possível registar o pedido. Tente novamente.');
-      setSaving(false);
-      return;
+    try {
+      sessionStorage.setItem('2s_latest_booking', JSON.stringify({
+        ...booking,
+        propertyAddress: property.address,
+        extraMessage: message.trim(),
+        savedInDatabase: saved,
+      }));
+    } catch (err) {
+      console.warn('Não foi possível guardar a cópia local do pedido:', err);
     }
-
-    sessionStorage.setItem('2s_latest_booking', JSON.stringify({
-      clientName: payload.client_name,
-      clientPhone: payload.client_phone,
-      clientEmail: payload.client_email,
-      propertyTitle: payload.property_title,
-      propertyId: payload.property_id,
-      preferredDate: payload.preferred_date,
-      preferredTime: payload.preferred_time,
-    }));
-
-    const whatsappUrl = getVisitWhatsAppUrl({
-      clientName: payload.client_name,
-      clientPhone: payload.client_phone,
-      clientEmail: payload.client_email,
-      propertyTitle: payload.property_title,
-      propertyId: payload.property_id,
-      preferredDate: payload.preferred_date,
-      preferredTime: payload.preferred_time,
-    });
 
     setSaving(false);
-    window.open(whatsappUrl, '_blank');
+
+    if (whatsappWindow && !whatsappWindow.closed) {
+      whatsappWindow.location.href = whatsappUrl;
+    } else {
+      // Fallback if the browser blocked the new tab.
+      window.location.href = whatsappUrl;
+    }
+
+    if (!saved) {
+      setError('O WhatsApp será aberto com o pedido preparado, mas o site não conseguiu guardar uma cópia na base de dados. ' +
+        (saveErrorMessage ? 'Detalhe técnico: ' + saveErrorMessage : ''));
+    }
   };
 
   return (
@@ -153,7 +180,7 @@ export const ScheduleVisitPage: React.FC = () => {
           <div><label className="label">Mensagem (opcional)</label><textarea value={message} onChange={(e) => setMessage(e.target.value)} className="field min-h-24" placeholder="Alguma informação adicional?" /></div>
 
           <div className="rounded-2xl bg-[#F5F7FA] border border-[#E1E6EE] p-4 text-sm text-[#566176]">
-            O pedido será guardado no painel da 2Simoveis e o WhatsApp abrirá com a mensagem preparada para o cliente confirmar e enviar.
+            O WhatsApp abrirá com os seus dados, o imóvel, a data e a hora preenchidos. Confirme a mensagem e toque em Enviar. Se a ligação à base de dados falhar, ainda poderá contactar o Sérgio pelo WhatsApp.
           </div>
 
           {error && <p className="text-sm text-[#B42318]">{error}</p>}
