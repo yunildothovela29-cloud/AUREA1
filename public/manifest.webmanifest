@@ -1,0 +1,31 @@
+{
+  "id": "/",
+  "name": "2Simoveis",
+  "short_name": "2Simoveis",
+  "description": "Consulte imóveis, veja detalhes e marque visitas com a 2Simoveis.",
+  "lang": "pt",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F7F9FC",
+  "theme_color": "#14245F",
+  "categories": [
+    "business",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "/icons/2simoveis-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/2simoveis-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
